@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>異質區塊鏈計畫 | 病例資料請求</title>
+	<!--/tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="application/x-javascript">
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<!--//tags -->
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+	<link href="css/font-awesome.css" rel="stylesheet">
+	<!-- //for bootstrap working -->
+	<link href="//fonts.googleapis.com/css?family=Work+Sans:200,300,400,500,600,700" rel="stylesheet">
+	<link href='//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,900,900italic,700italic'
+	    rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<!-- header -->
+	<div class="header" id="home">
+		<div class="content white agile-info">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container">
+					<div class="col-md-3 footer_bottom_grid">
+					<div class="social">
+						<ul>
+							<li><a href="index.html"><img src="images/logo.png" class="img-responsive" /></a></li>
+						</ul>
+					</div>
+				</div>
+					<!--/.navbar-header-->
+
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<nav class="link-effect-2" id="link-effect-2">
+							<ul class="nav navbar-nav">
+								<li class="active"><a href="/" class="effect-3">首頁</a></li>
+								
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle effect-3" data-toggle="dropdown">長照人員<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="/care/login">登入</a></li>
+										<li class="divider"></li>
+										<li><a href="/care/register">註冊</a></li>
+										<li class="divider"></li>
+										<li><a href="/care/medcase">病例資料請求</a></li>
+										<li class="divider"></li>
+										<li><a href="/care/medcase_response">病歷資料請求結果</a></li>
+										<li class="divider"></li>
+									</ul>
+								</li>
+
+								<li class="dropdown">
+									<a href="services.html" class="dropdown-toggle effect-3" data-toggle="dropdown">醫護人員<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="/hospital/login">登入</a></li>
+										<li class="divider"></li>
+										<li><a href="/hospital/register">註冊</a></li>
+										<li class="divider"></li>
+										<li><a href="/hospital/upload">資料上傳頁面</a></li>
+										<li class="divider"></li>
+									</ul>
+								</li>
+							</ul>
+						</nav>
+					</div>
+					<!--/.navbar-collapse-->
+					<!--/.navbar-->
+				</div>
+			</nav>
+		</div>
+	</div>
+	
+
+	<!--/w3_short-->
+	<div class="services-breadcrumb_w3layouts">
+		<div class="inner_breadcrumb">
+
+			<ul class="short_w3ls"_w3ls>
+				<li><a href="/">首頁</a><span>|</span></li>
+				<li>病例資料請求結果</li>
+			</ul>
+		</div>
+	</div>
+	<!--//w3_short-->
+	<!-- /inner_content -->
+	<div class="inner_content_info_agileits">
+		<div class="container">
+			<div class="tittle_head_w3ls">
+				<h3 class="tittle three">授權病歷資料</h3>
+			</div>
+			<div class="inner_sec_grids_info_w3ls">
+				<div class="col-md-8 job_info_left">
+					<% for ( var i = 0 ; i < data.length  ; i++){ %>
+						<div class="tab_grid_prof">
+							<div class="col-sm-3 loc_1">
+								<% var picname =  "images/p"+(i+1)+".png" %>
+								<img src='<%= picname %>' >
+							</div>
+							<div class="col-sm-9">
+								<div class="location_box1">
+									<h6><%= i+1 %>. 病患名稱 : <%= data[i].PatientName %> </h6>
+									<p><span class="m_2">健保卡號後四碼 : <%= data[i].cardNum %>  </span></p>
+									<% if(data[i].Result==1){ %>
+										<p><span class="m_2">授權結果 : 審核成功 </span><i class="fa fa-check"> </i> <span class="icon_text"></span></p>
+										<p><span class="m_2"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span class="glyphicon-class">申請期間 : <%= moment(data[i].createtime).format('YYYY-MM-DD'); %></span></p>
+										<p><span class="m_2"><i class="fa fa-times" ></i> <span>截止時間 : <%= moment(data[i].createtime).add(7, 'days').format('YYYY-MM-DD'); %></span></p>	
+										<ul class="links_bottom">													
+											<li class="last"><a href="#"><span class="icon_text">查看 <i class="fa fa-caret-right icon_1"> </i></span></a></li>
+										</ul> 
+									<% } else{ %>
+										<p><span class="m_2">授權結果 : 審核失敗 </span><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></p>
+										<p><span class="m_2"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span class="glyphicon-class">申請期間 : <%= moment(data[i].createtime).format('YYYY-MM-DD'); %></span></p>
+									<% } %>
+								</div>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+					<% } %>
+
+					<div class="tab_grid_prof">
+						<div class="col-sm-3 loc_1">
+							<img src="images/p4.png">
+						</div>
+						<div class="col-sm-9">
+							<div class="location_box1">
+								<h6>3. 病患名稱 : Alex</h6>
+								<p><span class="m_2">健保卡號後四碼 : 3597  </span></p>
+								<p><span class="m_2">授權結果 : 審核中 </span></p>
+								<p><span class="m_2"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span class="glyphicon-class">申請期間 : 2022/02/22</span></p>
+							</div>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+
+					<ul class="pagination paging w3-agileits-paging">
+						<li>
+							<a href="#" aria-label="Previous">
+						<span aria-hidden="true">«</span>
+					  </a>
+						</li>
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li>
+							<a href="#" aria-label="Next">
+						<span aria-hidden="true">»</span>
+					  </a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-4 job_info_right">
+					<div class="col_3 experience">
+						<h3>授權結果</h3>
+						<table class="table">
+							<tbody>
+								<tr class="unread checked">
+									<td class="hidden-xs">
+										<input type="checkbox" class="checkbox">
+									</td>
+									<td class="hidden-xs">
+										審核成功
+									</td>
+									<td>
+										(1)
+									</td>
+								</tr>
+								<tr class="unread checked">
+									<td class="hidden-xs">
+										<input type="checkbox" class="checkbox">
+									</td>
+									<td class="hidden-xs">
+										審核中
+									</td>
+									<td>
+										(1)
+									</td>
+								</tr>
+								<tr class="unread checked">
+									<td class="hidden-xs">
+										<input type="checkbox" class="checkbox">
+									</td>
+									<td class="hidden-xs">
+										審核失敗
+									</td>
+									<td>
+										(1)
+									</td>
+								</tr>								
+							</tbody>
+						</table>
+					</div>					
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!-- //inner_content -->
+
+
+	<a href="#home" class="scroll" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+	<!-- js -->
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+</body>
+
+</html>

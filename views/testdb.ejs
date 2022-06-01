@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<h1>Account - List</h1>
+	<input type='submit' value='Add' onclick="javascript: location.href='testdb/add'">
+	<a href="#" onclick="window.open('testdb/pdfopen', '_blank', 'fullscreen=yes'); return false;">MyPDF</a>
+	<table>
+		<tr>
+			<th>name</th>
+			<th>id</th>
+		</tr>
+		<% for ( var i = 0 ; i < data.length ; i++){ %>
+		<tr>
+			<td>
+				<%= data[i].name  %>
+			</td>
+			<td>
+				<%= data[i].workID  %>
+			</td>
+		</tr>
+		<% } %>
+
+		<tr>
+			<td>
+				<form action="testdb/fileprocess" method="POST" enctype="multipart/form-data">
+					<input type="file" name="myFile" id="myFile" />
+					<input type="submit" , value="Upload"/>
+				</form>
+			</td>>
+			<td>
+				<input type='submit' value='DEC' onclick="javascript: location.href='testdb/decprocess'">
+			</td>>
+		</tr>
+	</table>
+</html>

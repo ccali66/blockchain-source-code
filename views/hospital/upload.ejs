@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>異質區塊鏈計畫 | 資料上傳頁面</title>
+	<!--/tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="application/x-javascript">
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<!--//tags -->
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+	<link href="css/font-awesome.css" rel="stylesheet">
+	<!-- //for bootstrap working -->
+	<link href="//fonts.googleapis.com/css?family=Work+Sans:200,300,400,500,600,700" rel="stylesheet">
+	<link href='//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,900,900italic,700italic'
+	    rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<!-- header -->
+	<div class="header" id="home">
+		<div class="content white agile-info">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container">
+					<div class="col-md-3 footer_bottom_grid">
+					<div class="social">
+						<ul>
+							<li><a href="index.html"><img src="images/logo.png" class="img-responsive" /></a></li>
+						</ul>
+					</div>
+				</div>
+					<!--/.navbar-header-->
+
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<nav class="link-effect-2" id="link-effect-2">
+							<ul class="nav navbar-nav">
+								<li class="active"><a href="/" class="effect-3">首頁</a></li>
+
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle effect-3" data-toggle="dropdown">長照人員<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="/care/login">登入</a></li>
+										<li class="divider"></li>
+										<li><a href="/care/register">註冊</a></li>
+										<li class="divider"></li>
+										<li><a href="/care/medcase">病例資料請求</a></li>
+										<li class="divider"></li>
+										<li><a href="/care/medcase_response">病歷資料請求結果</a></li>
+										<li class="divider"></li>
+									</ul>
+								</li>
+
+								<li class="dropdown">
+									<a href="services.html" class="dropdown-toggle effect-3" data-toggle="dropdown">醫護人員<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="/hospital/login">登入</a></li>
+										<li class="divider"></li>
+										<li><a href="/hospital/register">註冊</a></li>
+										<li class="divider"></li>
+										<li><a href="/hospital/upload">資料上傳頁面</a></li>
+										<li class="divider"></li>
+									</ul>
+								</li>
+							</ul>
+						</nav>
+					</div>
+					<!--/.navbar-collapse-->
+					<!--/.navbar-->
+				</div>
+			</nav>
+		</div>
+	</div>
+	
+
+	<!--/w3_short-->
+	<div class="services-breadcrumb_w3layouts">
+		<div class="inner_breadcrumb">
+
+			<ul class="short_w3ls"_w3ls>
+				<li><a href="/">首頁</a><span>|</span></li>
+				<li>資料上傳頁面</li>
+			</ul>
+		</div>
+	</div>
+
+
+	<div class="inner_content_info_agileits">
+		<div class="tittle_head_w3ls">
+			<h3 class="tittle three">資料上傳頁面</h3>
+		</div>
+		<div class="inner_sec_grids_info login-form">
+			<form action="uploadfile" method="post" enctype="multipart/form-data">
+				<div class="col-md-6 form-left">
+					<div class="signin-form">
+						<div class="login-form-rec">
+								病患健保卡號* <input type="text" name="NID" placeholder="3025-XXXX-XXXX-2588" required="">
+								病患姓名* <input type="text" name="cname" placeholder="XXX" required="">
+								病患身分證* <input type="text" name="CID" placeholder="A100406889" required="">
+									<div class="form-inputs upload">
+										上傳病例*<br>
+										(建議上傳pdf、ppt、word格式)										
+										<input type="file" id="fileselect" name="myFile"/>
+										<!--<input type="submit" value="選擇上傳檔案">-->
+									</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6 form-right">					
+					<div class="form-inputs name">
+					<h4><b>授權屬性</b></h4><br>
+
+					<table class="table">
+							<tbody>
+								<tr class="unread checked">									
+									<td class="hidden-xs">
+										工作經驗
+									</td>									
+									<td>
+										<br>
+									<div class="form-inputs name">													
+										<input type="checkbox" name="attr" value="10">0-1年
+										<input type="checkbox" name="attr" value="11">2-4年
+										<input type="checkbox" name="attr" value="12">5-7年
+										<br>
+										<input type="checkbox" name="attr" value="13">8-10年
+										<input type="checkbox" name="attr" value="14">10年以上						
+									</div>
+									</td>
+								</tr>
+
+								<tr class="unread checked">									
+									<td class="hidden-xs">
+										長照
+									</td>									
+									<td>
+										<br>
+									<div class="form-inputs name">													
+										<input type="checkbox" name="attr" value="20">照顧服務人員
+										<input type="checkbox" name="attr" value="21">物理治療師	
+										<input type="checkbox" name="attr" value="22">職能治療師
+										<input type="checkbox" name="attr" value="24">營養師						
+									</div>
+									</td>
+								</tr>
+
+								<tr class="unread checked">									
+									<td class="hidden-xs">
+										醫院
+									</td>									
+									<td>
+										<br>
+									<div class="form-inputs name">													
+										<input type="checkbox" name="attr" value="30">醫師
+										<input type="checkbox" name="attr" value="31">護士						
+									</div>
+									</td>
+								</tr>
+
+								<tr class="unread checked">									
+									<td class="hidden-xs">
+										科別
+									</td>									
+									<td>
+										<br>
+									<div class="form-inputs name">													
+										<input type="checkbox" name="attr" value="40">內科
+										<input type="checkbox" name="attr" value="41">外科
+										<input type="checkbox" name="attr" value="42">眼科
+										<input type="checkbox" name="attr" value="43">骨科
+										<input type="checkbox" name="attr" value="44">復健科						
+									</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					<hr>						
+						<!-- <div class="form-inputs">
+
+						工作經驗
+						<div class="form-inputs name">													
+							<input type="checkbox" >0-1年
+							<input type="checkbox" >2-4年
+							<input type="checkbox" >5-7年
+							<input type="checkbox" >8-10年
+							<input type="checkbox" >10年以上						
+						</div>
+						<br>
+						
+						長照
+						<div class="form-inputs name">													
+							<input type="checkbox" >營養師
+							<input type="checkbox" >物理治療師	
+							<input type="checkbox" >職能治療師
+							<input type="checkbox" >照顧服務人員						
+						</div>
+						<br>
+
+						醫院
+						<div class="form-inputs name">													
+							<input type="checkbox" >醫師
+							<input type="checkbox" >護士				
+						</div>
+						<br>
+
+						科別
+						<div class="form-inputs name">														
+							<input type="checkbox" >內科
+							<input type="checkbox" >外科
+							<input type="checkbox" >眼科
+							<input type="checkbox" >骨科
+							<input type="checkbox" >復健科			
+						</div>
+						<br>
+						</div> -->
+					</div>
+				</div>
+
+				<input type="submit" value="送出">
+
+			</form>
+
+		</div>
+	</div>
+
+	<a href="#home" class="scroll" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+	<!-- js -->
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+</body>
+
+</html>

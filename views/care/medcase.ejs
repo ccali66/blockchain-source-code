@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>異質區塊鏈計畫 | 病例資料請求</title>
+	<!--/tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="application/x-javascript">
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<!--//tags -->
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+	<link href="css/font-awesome.css" rel="stylesheet">
+	<!-- //for bootstrap working -->
+	<link href="//fonts.googleapis.com/css?family=Work+Sans:200,300,400,500,600,700" rel="stylesheet">
+	<link href='//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,900,900italic,700italic'
+	    rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<!-- header -->	
+	<div class="header" id="home">
+		<div class="content white agile-info">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container">
+					<div class="col-md-3 footer_bottom_grid">
+					<div class="social">
+						<ul>
+							<li><a href="index.html"><img src="images/logo.png" class="img-responsive" /></a></li>
+						</ul>
+					</div>
+				</div>
+					<!--/.navbar-header-->
+
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<nav class="link-effect-2" id="link-effect-2">
+							<ul class="nav navbar-nav">
+								<li class="active"><a href="/" class="effect-3">首頁</a></li>
+								
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle effect-3" data-toggle="dropdown">長照人員<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="/care/login">登入</a></li>
+										<li class="divider"></li>
+										<li><a href="/care/register">註冊</a></li>
+										<li class="divider"></li>
+										<li><a href="/care/medcase">病例資料請求</a></li>
+										<li class="divider"></li>
+										<li><a href="/care/medcase_response">病歷資料請求結果</a></li>
+										<li class="divider"></li>
+									</ul>
+								</li>
+
+								<li class="dropdown">
+									<a href="services.html" class="dropdown-toggle effect-3" data-toggle="dropdown">醫護人員<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="/hospital/login">登入</a></li>
+										<li class="divider"></li>
+										<li><a href="/hospital/register">註冊</a></li>
+										<li class="divider"></li>
+										<li><a href="/hospital/upload">資料上傳頁面</a></li>
+										<li class="divider"></li>
+									</ul>
+								</li>
+							</ul>
+						</nav>
+					</div>
+					<!--/.navbar-collapse-->
+					<!--/.navbar-->
+				</div>
+			</nav>
+		</div>
+	</div>
+
+
+	<!--/w3_short-->
+	<div class="services-breadcrumb_w3layouts">
+		<div class="inner_breadcrumb">
+
+			<ul class="short_w3ls"_w3ls>
+				<li><a href="/">首頁</a><span>|</span></li>
+				<li>病例資料請求</li>
+			</ul>
+		</div>
+	</div>
+	<!--//w3_short-->
+	<!-- /inner_content -->
+	<div class="inner_content_info_agileits">
+		<div class="container">
+			<div class="tittle_head_w3ls">
+				<h3 class="tittle three">授權病歷資料</h3>
+			</div>
+			<div class="inner_sec_grids_info_w3ls">
+				<div class="signin-form">
+					<div class="login-form-rec">
+						<form action="#" method="post">
+							病患姓名* <input type="text" name="ID" placeholder="請將健保卡插入讀卡機，按下讀取驗證" required="">
+							<h2>
+								<a href="#"><span class="label label-primary">讀取(Read)</span></a>
+							</h2><br>
+
+							醫院名稱* <select id="country13" onchange="change_country(this.value)" class="frm-field required">
+										<option value="null">請選取資料授權的醫院</option>
+										<option value="50">A醫院</option>
+										<option value="51">B醫院</option>
+										<option value="52">C醫院</option>
+										<option value="53">D醫院</option> 
+										<option value="54">其他</option>    
+							</select>
+
+							<input type="submit" value="送出">
+							<!-- <input type="reset" value="取消"> -->
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<a href="#home" class="scroll" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+	<!-- js -->
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+</body>
+
+</html>

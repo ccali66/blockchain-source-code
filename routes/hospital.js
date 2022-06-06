@@ -9,7 +9,9 @@ var getmac = require('getmac');
 var multer  = require('multer');
 var upload = multer({ dest: 'upload/'});
 var router = express.Router();
- 
+const hash = require("./hashfunc.js");
+const aes = require("./pdfenc.js");
+const chain = require("./blockchain.js");
 
 function hashsha256(input){
     var hash = crypto.createHash('sha256');
@@ -148,6 +150,20 @@ router.get('/upload', function(req, res, next){
     res.render('hospital/upload', {title: 'Add Test'});
 });
 
+async function callchain(name, value, position){
+    try {
+        console.log('This is callchain function');
+        const bytecode = fs.readFileSync('routes/chainbycode.txt', 'utf8');
+        const abi = JSON.parse(fs.readFileSync('routes/chainabi.txt', 'utf8'));
+        const conaddr = await chain.deploySmartContract(name, value, position, bytecode, abi);
+        console.log("contractaddr:"+conaddr);
+        return conaddr;
+    
+    } catch (err) {
+        console.error('EError:'+err);
+    }
+}
+
 router.post('/uploadfile', upload.single('myFile') ,function(req, res, next){
     /** When using the "single" data come in "req.file" regardless of the attribute "name". **/
     var tmp_path = req.file.path;
@@ -162,15 +178,22 @@ router.post('/uploadfile', upload.single('myFile') ,function(req, res, next){
     src.on('end', function() { return res.render('complete'); });
     src.on('error', function(err) { return res.render('error'); });
     req.session.filename = req.file.originalname;
-    
+    console.log('file:'+req.session.filename);
+
     /** Get attr */
+    var cardnum = req.body.NID;
+    var name = req.body.cname;
+    var CID = req.body.CID;
+    console.log('cardnum:'+cardnum);
+    console.log('name:'+name);
+    console.log('CID:'+CID);
     var attr = req.body.attr;
     var stringattr = JSON.stringify(attr);
     console.log('titletypeof:'+typeof(stringattr));
     console.log('title:'+stringattr);
     req.session.attr = stringattr;
     
-    res.redirect('/testdb/deployprocess');
+    res.redirect('/hospital/deployprocess');
 });
 
 router.get('/deployprocess',async function(req, res, next){
@@ -201,7 +224,7 @@ router.get('/deployprocess',async function(req, res, next){
           console.log(err);
       }
   });
-  res.redirect('/testdb');
+  res.redirect('/hospital/upload');
 });
 
 module.exports = router;

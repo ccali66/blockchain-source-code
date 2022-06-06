@@ -109,8 +109,11 @@
 									<div class="form-inputs upload">
 										上傳病例*<br>
 										(建議上傳pdf、ppt、word格式)
-										<input type="file" name="myFile" id="fileselect" size="20" class="ifile">											
+										<input type="file" name="myFile" id="fileselect" size="20" class="ifile">
 										<input type="button" value="選擇上傳檔案">
+										<div class="fileName">
+											未選擇檔案
+										</div>
 									</div>
 						</div>
 					</div>
@@ -240,3 +243,13 @@
 </body>
 
 </html>
+
+<script>
+	//顯示選擇的上傳檔案檔名
+	$(".ifile").on("change", function () {
+		var filePath = $(this).val();
+		var arr = filePath.split('\\');
+		var fileName = arr[arr.length - 1];
+		$(".fileName").html(fileName);
+	});
+</script>

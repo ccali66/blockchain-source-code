@@ -13,17 +13,17 @@ const hash = require("./hashfunc.js");
 const aes = require("./pdfenc.js");
 const chain = require("./blockchain.js");
 
-function hashsha256(input){
-    var hash = crypto.createHash('sha256');
-    return hash.update(input).digest('hex');
-}
-
 router.use(session({
-    secret: 'secret',
+    secret: 'test',
     saveUninitialized: false,
     resave: true, 
     })
 );
+
+function hashsha256(input){
+    var hash = crypto.createHash('sha256');
+    return hash.update(input).digest('hex');
+}
 
 router.get('/captcha', function(req, res, next) {
     const captcha = svgcaptcha.createMathExpr({
@@ -36,7 +36,7 @@ router.get('/captcha', function(req, res, next) {
     });
 
     req.session.cap = captcha.text;
-    cap = captcha.text;
+    //cap = captcha.text;
     console.log('cap:'+req.session.cap);
     res.type('svg');
     res.status(200).send(captcha.data);
@@ -54,17 +54,17 @@ router.post('/logining',function(req, res, next){
     //console.log(callMac());
     if(webcaptcha!=req.session.cap){
         console.log('captcha error');
-        res.send('<script>alert("captcha error");   window.location.href = "login"; </script>').end();
+        res.send('<script>alert("驗證碼輸入錯誤，麻煩請重新登入");   window.location.href = "login"; </script>').end();
     }else{
         var qur = db.query('Select workID, password, name from user where workID = ?', workID, function(err, rows) {
             if (err){
-            console.log('sql error');
+                console.log('sql error');
                 console.log(err);
-            res.redirect('back');
+                res.redirect('back');
             }else{
                 if(rows == false){
-                    console.log('account error');
-                    res.send('<script>alert("account error");   window.location.href = "login"; </script>').end();
+                console.log('account error');
+                res.send('<script>alert("查無此帳號，麻煩請重新登入");   window.location.href = "login"; </script>').end();
                 }else{
                     dbpw = rows[0].password;
                     if(dbpw == pw){
@@ -72,7 +72,7 @@ router.post('/logining',function(req, res, next){
                             res.redirect('upload');
                     }else{
                         console.log('wrong password');
-                        res.send('<script>alert("wrong password");   window.location.href = "login"; </script>').end();
+                        res.send('<script>alert("密碼輸入錯誤，麻煩請重新登入");   window.location.href = "login"; </script>').end();
                     }
                 }
             }
@@ -200,7 +200,7 @@ router.get('/deployprocess',async function(req, res, next){
   var db = req.con;
   var filename = req.session.filename;
   var target_path = 'uploads/'+filename;
-  var attr =req.session.filename;
+  var attr =req.session.attr;
   /** Hash Value*/
   filehashvalue=hash.filehash(target_path);
   console.log('hashvalue:'+filehashvalue);

@@ -77,7 +77,7 @@ router.post('/logining',function(req, res, next){
     //console.log(callMac());
     if(webcaptcha!=req.session.cap){
         console.log('captcha error');
-        res.send('<script>alert("captcha error");   window.location.href = "login"; </script>').end();
+        res.send('<script>alert("驗證碼輸入錯誤，麻煩請重新登入");   window.location.href = "login"; </script>').end();
     }else{
         var qur = db.query('Select workID, password, name from user where workID = ?', workID, function(err, rows) {
             if (err){
@@ -85,10 +85,9 @@ router.post('/logining',function(req, res, next){
                 console.log(err);
                 res.redirect('back');
             }else{
-                console.log(qur);
                 if(rows == false){
                 console.log('account error');
-                res.send('<script>alert("account error");   window.location.href = "login"; </script>').end();
+                res.send('<script>alert("查無此帳號，麻煩請重新登入");   window.location.href = "login"; </script>').end();
                 }else{
                     dbpw = rows[0].password;
                     if(dbpw == pw){
@@ -96,7 +95,7 @@ router.post('/logining',function(req, res, next){
                             res.redirect('medcase');
                     }else{
                         console.log('wrong password');
-                        res.send('<script>alert("wrong password");   window.location.href = "login"; </script>').end();
+                        res.send('<script>alert("密碼輸入錯誤，麻煩請重新登入");   window.location.href = "login"; </script>').end();
                     }
                 }
             }

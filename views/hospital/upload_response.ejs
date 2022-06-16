@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>異質區塊鏈計畫 | 病例資料請求</title>
+	<title>異質區塊鏈計畫 | 病歷上傳結果</title>
 	<!--/tags -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -49,27 +49,27 @@
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle effect-3" data-toggle="dropdown">長照人員<b class="caret"></b></a>
 									<ul class="dropdown-menu">
-										<li><a href="/care/login">登入</a></li>
+										<li><a href="http://140.118.9.227:3005/care/login">登入</a></li>
 										<li class="divider"></li>
-										<li><a href="/care/register">註冊</a></li>
+										<li><a href="http://140.118.9.227:3005/care/register">註冊</a></li>
 										<li class="divider"></li>
-										<li><a href="/care/medcase">病例資料請求</a></li>
+										<li><a href="http://140.118.9.227:3005/care/medcase">病歷資料請求</a></li>
 										<li class="divider"></li>
-										<li><a href="/care/medcase_response">病歷資料請求結果</a></li>
+										<li><a href="http://140.118.9.227:3005/care/medcase_response">病歷資料請求結果</a></li>
 										<li class="divider"></li>
 									</ul>
 								</li>
 
 								<li class="dropdown">
-									<a href="services.html" class="dropdown-toggle effect-3" data-toggle="dropdown">醫護人員<b class="caret"></b></a>
+									<a href="#" class="dropdown-toggle effect-3" data-toggle="dropdown">醫護人員<b class="caret"></b></a>
 									<ul class="dropdown-menu">
-										<li><a href="http://140.118.9.225:3005/hospital/login">登入</a></li>
+										<li><a href="/hospital/login">登入</a></li>
 										<li class="divider"></li>
-										<li><a href="http://140.118.9.225:3005/hospital/register">註冊</a></li>
+										<li><a href="/hospital/register">註冊</a></li>
 										<li class="divider"></li>
-										<li><a href="http://140.118.9.225:3005/hospital/upload">資料上傳頁面</a></li>
+										<li><a href="/hospital/upload">病歷上傳頁面</a></li>
 										<li class="divider"></li>
-										<li><a href="http://140.118.9.225:3005/hospital/upload_response">病歷上傳結果</a></li>
+										<li><a href="/hospital/upload_response">病歷上傳結果</a></li>
 										<li class="divider"></li>
 									</ul>
 								</li>
@@ -90,7 +90,7 @@
 
 			<ul class="short_w3ls"_w3ls>
 				<li><a href="/">首頁</a><span>|</span></li>
-				<li>病例資料請求結果</li>
+				<li>病歷上傳結果</li>
 			</ul>
 		</div>
 	</div>
@@ -105,45 +105,27 @@
 				<div class="col-md-8 job_info_left">
 					<% for ( var i = 0 ; i < data.length  ; i++){ %>
 						<div class="tab_grid_prof">
+							<!--
 							<div class="col-sm-3 loc_1">
 								<% var picname =  "images/p"+(i+1)+".png" %>
 								<img src='<%= picname %>' >
 							</div>
+							-->
 							<div class="col-sm-9">
 								<div class="location_box1">
-									<h6><%= i+1 %>. 病患名稱 : <%= data[i].PatientName %> </h6>
-									<p><span class="m_2">健保卡號後四碼 : <%= data[i].cardNum %>  </span></p>
-									<% if(data[i].Result==1){ %>
-										<p><span class="m_2">授權結果 : 審核成功 </span><i class="fa fa-check"> </i> <span class="icon_text"></span></p>
-										<p><span class="m_2"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span class="glyphicon-class">申請期間 : <%= moment(data[i].createtime).format('YYYY-MM-DD'); %></span></p>
-										<p><span class="m_2"><i class="fa fa-times" ></i> <span>截止時間 : <%= moment(data[i].createtime).add(7, 'days').format('YYYY-MM-DD'); %></span></p>	
+									<h6><%= i+1 %>. 病歷名稱 : <%= data[i].dataName %> </h6>
+									<p><span class="m_2">授權屬性 : <%= data[i].attr %>  </span></p>
+									<p><span class="m_2">病歷雜湊值 : <%= data[i].hashvalue %>  </span></p>
+									<p><span class="m_2">合約地址 : <%= data[i].contractaddr %>  </span></p>
+									<p><span class="m_2"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span class="glyphicon-class">上傳時間 : <%= moment(data[i].createtime).format('YYYY-MM-DD HH:MM'); %></span></p>
 										<ul class="links_bottom">													
 											<li class="last"><a href="#"><span class="icon_text">查看 <i class="fa fa-caret-right icon_1"> </i></span></a></li>
 										</ul> 
-									<% } else{ %>
-										<p><span class="m_2">授權結果 : 審核失敗 </span><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></p>
-										<p><span class="m_2"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span class="glyphicon-class">申請期間 : <%= moment(data[i].createtime).format('YYYY-MM-DD'); %></span></p>
-									<% } %>
 								</div>
 							</div>
 							<div class="clearfix"> </div>
 						</div>
 					<% } %>
-
-					<div class="tab_grid_prof">
-						<div class="col-sm-3 loc_1">
-							<img src="images/p4.png">
-						</div>
-						<div class="col-sm-9">
-							<div class="location_box1">
-								<h6>3. 病患名稱 : Alex</h6>
-								<p><span class="m_2">健保卡號後四碼 : 3597  </span></p>
-								<p><span class="m_2">授權結果 : 審核中 </span></p>
-								<p><span class="m_2"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span class="glyphicon-class">申請期間 : 2022/02/22</span></p>
-							</div>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
 
 					<ul class="pagination paging w3-agileits-paging">
 						<li>

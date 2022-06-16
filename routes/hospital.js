@@ -227,4 +227,18 @@ router.get('/deployprocess',async function(req, res, next){
   res.redirect('/hospital/upload');
 });
 
+router.get('/upload_response', function(req, res, next){
+    var db = req.con;
+    db.query('SELECT * FROM uploadData', function(err, rows) {
+        if (err) {
+	    console.log('DB error');
+        console.log(err);
+        }
+        var data = rows;
+        console.log(data);
+
+        res.render('hospital/upload_response', { title: 'upload_response', data: data, moment: moment});
+    });
+});
+
 module.exports = router;

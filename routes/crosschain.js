@@ -1,4 +1,5 @@
 const fetch = require("node-fetch");
+const Headers = require("node-fetch").Headers;
 /*
 window.onload = function () {
   console.log("長照單位");
@@ -10,23 +11,23 @@ window.onload = function () {
 //   connect();
 };
 */
-function launchTx(patientName, hospitalName) {
+async function launchTx(patientName, hospitalName) {
   console.log("launch tx");
   var data = {
     source: {
       chainName: "src",
     },
     destination: {
-      chainName: hospitalName,
+      chainName: "dest",
     },
     txType: "Req",
-    txContent: "/" + patientName + "/record.png",
+    txContent: "/" + 'A123456789' + "/record.pdf",
   };
 
   console.log(data);
 
   // 發起跨鏈交易
-  fetch("http://localhost:8080/transaction/launch", {
+  fetch("http://140.118.9.225/transaction/launch", {
     method: "POST",
     headers: new Headers({
       "Content-Type": "application/json",
@@ -39,10 +40,10 @@ function launchTx(patientName, hospitalName) {
       }
     })
     .then((jsonData) => {
-      console.log(jsonData);
+      console.log('jsonData:'+jsonData);
 
-      var resContent = document.getElementById("res-content");
-      resContent.innerHTML = "<p>" + jsonData.txContent + "<p/>";
+      //var resContent = document.getElementById("res-content");
+      //resContent.innerHTML = "<p>" + jsonData.txContent + "<p/>";
 
     })
     .catch((err) => {

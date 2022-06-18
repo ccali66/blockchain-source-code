@@ -4,6 +4,9 @@ var moment = require('moment');
 var express = require('express');
 var session = require('express-session');
 const keylib = require("./ether_createkey.js");
+const cross = require("./crosschain.js");
+const fetch = require("node-fetch");
+const Headers = require("node-fetch").Headers;
 var svgcaptcha = require('svg-captcha');
 var getmac = require('getmac');
 var router = express.Router();
@@ -44,9 +47,6 @@ function hashsha256(input){
    
 });
 */
-router.get('/medcase', function(req, res, next){
-    res.render('care/medcase', {title: 'Add Test'});
-});
 
 router.get('/captcha', function(req, res, next) {
     const captcha = svgcaptcha.createMathExpr({
@@ -64,6 +64,7 @@ router.get('/captcha', function(req, res, next) {
     res.type('svg');
     res.status(200).send(captcha.data);
 });
+
 
 router.get('/login', function(req, res, next){
     res.render('care/c_login', {title: 'Add Test'});
@@ -109,14 +110,30 @@ router.get('/register', function(req, res, next){
     res.render('care/c_register', {title: 'register'});
 });
 
-router.get('/medcase', function(req, res, next){
-    res.render('care/medcase', {title: 'medcase'});
+async function chainrisk(){
+    const response = await fetch('http://140.118.9.226:5000/blockchain/smartcontract/0x3024D80C182066756411af08D07cCe34e5D2526d');
+    const r1 = response.clone();
+    const results = await Promise.all([response.json(), r1.text()]);
+    var res = JSON.stringify(results[0].result);
+    console.log('rishvalue:'+res);
+    return res;
+}
+
+router.get('/medcase',async function(req, res, next){
+    var risk = await chainrisk();
+    res.render('care/medcase', {title: 'medcase', test: risk});
 });
 
 router.get('/medcase_read', function(req, res, next){
     res.render('care/medcase_read', {title: 'medcase_read'});
 });
 
+router.post('/crosschain',async function(req, res, next){
+    var CID = req.body.IDnum;
+    var IDnum = req.body.IDnum;
+    await cross.launchTx(CID,IDnum);
+    //res.redirect('medcase_response');
+});
 /*router.get('/medcase_response', function(req, res, next){
     res.render('care/medcase_response', {title: 'medcase_response'});
 });
@@ -155,7 +172,6 @@ router.post('/addUser', function(req, res, next) {
     var gender = req.body.gender;
     var years = Number(req.body.years);
     var attr = gender + ',' + years + ',' + title;
-    
     
     if (password != password2){
     	console.log('password is different');

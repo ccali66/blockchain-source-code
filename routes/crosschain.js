@@ -28,8 +28,8 @@ async function launchTx(patientName, hospitalName) {
 
   // 發起跨鏈交易
   
-  const response = await fetch("http://140.118.9.226:5000/blockchain/smartcontract/0x22C5593339251514dcFaE16d5D1d3db882554145", {
-        method: "GET",
+  const response = await fetch("http://140.118.9.225/transaction/launch", {
+        method: "POST",
         headers: new Headers({
         "Content-Type": "application/json",
         }),

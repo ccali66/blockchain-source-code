@@ -111,7 +111,13 @@ router.get('/register', function(req, res, next){
 });
 
 async function chainrisk(){
-    const response = await fetch('http://140.118.9.226:5000/blockchain/smartcontract/0x3024D80C182066756411af08D07cCe34e5D2526d');
+    const response = await fetch("http://140.118.9.226:5000/blockchain/smartcontract/0x22C5593339251514dcFaE16d5D1d3db882554145", {
+        method: "GET",
+        headers: new Headers({
+        "Content-Type": "application/json",
+        }),
+    });
+
     const r1 = response.clone();
     const results = await Promise.all([response.json(), r1.text()]);
     var res = JSON.stringify(results[0].result);

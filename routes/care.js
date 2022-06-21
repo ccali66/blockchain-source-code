@@ -110,23 +110,10 @@ router.get('/register', function(req, res, next){
     res.render('care/c_register', {title: 'register'});
 });
 
-async function chainrisk(){
-    const response = await fetch("http://140.118.9.226:5000/blockchain/smartcontract/0x22C5593339251514dcFaE16d5D1d3db882554145", {
-        method: "GET",
-        headers: new Headers({
-        "Content-Type": "application/json",
-        }),
-    });
-
-    const r1 = response.clone();
-    const results = await Promise.all([response.json(), r1.text()]);
-    var res = JSON.stringify(results[0].result);
-    console.log('rishvalue:'+res);
-    return res;
-}
-
 router.get('/medcase',async function(req, res, next){
-    var risk = await chainrisk();
+    var risk = await cross.chainrisk();
+    
+    
     res.render('care/medcase', {title: 'medcase', test: risk});
 });
 
@@ -137,8 +124,17 @@ router.get('/medcase_read', function(req, res, next){
 router.post('/crosschain',async function(req, res, next){
     var CID = req.body.IDnum;
     var IDnum = req.body.IDnum;
-    await cross.launchTx(CID,IDnum);
-    //res.redirect('medcase_response');
+    var sub3res = await cross.launchTx(CID,IDnum);
+    console.log('sub3-crosschainres:'+sub3res);
+
+    var sub4res = await cross.sub4();
+    if(sub4res == '{{"Chain":"ChildA", "message":"Consensus Accepted"},{"Chain":"Relay", "message":"Consensus Accepted"},{"Chain":"ChainB", "message":"Consensus Accepted"}}'){
+        console.log('sub4 success');
+    }else{
+        console.log('sub4 error');
+    }
+    //store in DB (sub3res, sub4res)
+    res.redirect('medcase_response');
 });
 /*router.get('/medcase_response', function(req, res, next){
     res.render('care/medcase_response', {title: 'medcase_response'});

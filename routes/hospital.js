@@ -12,6 +12,7 @@ var router = express.Router();
 const hash = require("./hashfunc.js");
 const aes = require("./pdfenc.js");
 const chain = require("./blockchain.js");
+const cross = require("./crosschain.js");
 
 router.use(session({
     secret: 'test',
@@ -146,8 +147,9 @@ router.post('/addUser', function(req, res, next) {
 });
 
 
-router.get('/upload', function(req, res, next){
-    res.render('hospital/upload', {title: 'Add Test'});
+router.get('/upload',async function(req, res, next){
+    var risk = await cross.chainrisk(225);
+    res.render('hospital/upload', {riskv:risk});
 });
 
 async function callchain(name, value, position){
@@ -229,15 +231,15 @@ router.get('/deployprocess',async function(req, res, next){
 
 router.get('/upload_response', function(req, res, next){
     var db = req.con;
-    db.query('SELECT * FROM uploadData', function(err, rows) {
+    db.query('SELECT * FROM uploadData',async function(err, rows) {
         if (err) {
 	    console.log('DB error');
         console.log(err);
         }
         var data = rows;
         console.log(data);
-
-        res.render('hospital/upload_response', { title: 'upload_response', data: data, moment: moment});
+        var risk = await cross.chainrisk(225);
+        res.render('hospital/upload_response', { title: 'upload_response', data: data, moment: moment,riskv:risk});
     });
 });
 

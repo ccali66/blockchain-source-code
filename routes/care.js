@@ -111,14 +111,13 @@ router.get('/register', function(req, res, next){
 });
 
 router.get('/medcase',async function(req, res, next){
-    var risk = await cross.chainrisk();
-    
-    
-    res.render('care/medcase', {title: 'medcase', test: risk});
+    var risk = await cross.chainrisk(227);
+    res.render('care/medcase', {title: 'medcase', riskv: risk});
 });
 
-router.get('/medcase_read', function(req, res, next){
-    res.render('care/medcase_read', {title: 'medcase_read'});
+router.get('/medcase_read',async function(req, res, next){
+    var risk = await cross.chainrisk(227);
+    res.render('care/medcase_read', {title: 'medcase_read', riskv: risk});
 });
 
 router.post('/crosschain',async function(req, res, next){
@@ -140,17 +139,17 @@ router.post('/crosschain',async function(req, res, next){
     res.render('care/medcase_response', {title: 'medcase_response'});
 });
 */
-router.get('/medcase_response', function(req, res, next){
+router.get('/medcase_response',async function(req, res, next){
     var db = req.con;
-    db.query('SELECT * FROM Response', function(err, rows) {
+    db.query('SELECT * FROM Response',async function(err, rows) {
         if (err) {
 	    console.log('DB error');
         console.log(err);
         }
         var data = rows;
         console.log(data);
-
-        res.render('care/medcase_response', { title: 'medcase_response', data: data, moment: moment});
+        var risk = await cross.chainrisk(227);
+        res.render('care/medcase_response', { title: 'medcase_response', data: data, moment: moment, riskv: risk});
     });
 });
 

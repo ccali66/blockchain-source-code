@@ -90,7 +90,15 @@ async function chainrisk(selurl){
   const results = await Promise.all([response.json(), r1.text()]);
   var res = JSON.stringify(results[0].result);
   console.log('rishvalue:'+res);
-  return res;
+  var riskv = "";
+    if(res < 0.5){
+        riskv = '低';
+    }else if(res > 0.7){
+        riskv = '高';
+    }else{
+        riskv = '中';
+    }
+  return riskv;
 }
 
 module.exports = {launchTx,sub4,chainrisk,};

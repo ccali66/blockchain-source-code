@@ -96,7 +96,15 @@
 	</div>
 	<div class="container">
         <div class="fontawesome-icon-list">
-			<div class="icon-box col-md-3 col-sm-4"><a class="agile-icon" href="#"><i class="fa fa-location-arrow"></i>風險值：</a><%= riskv %></div>
+			<div class="icon-box col-md-3 col-sm-4"><a class="agile-icon" href="http://140.118.9.225:3300/blockchain"><i class="fa fa-location-arrow"></i>信賴程度：</a>
+				<% if(riskv=='高'){ %>
+					<font color='green' ><%= riskv %></font>
+				<% } else if(riskv=='中'){ %>
+					<font color='black' ><%= riskv %></font>
+				<% } else{ %>
+					<font color='red' ><%= riskv %></font>
+				<% } %>
+			</div>
 		</div>
 	</div>
 	<div class="inner_content_info_agileits">

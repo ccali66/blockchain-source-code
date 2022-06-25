@@ -118,19 +118,20 @@
 			<div class="inner_sec_grids_info_w3ls">
 				<div class="signin-form">
 					<div class="login-form-rec">
-						<form action="#" method="post">
-							病患姓名* <input type="text" name="ID" placeholder="請將健保卡插入讀卡機，按下讀取驗證" required="">
-							<h2>
+						<form action="crosschain" method="post">
+							病患身分證* <input type="text" name="IDnum" placeholder="請輸入病患身分證號" required="">
+							病患姓名* <input type="text" name="name" placeholder="請輸入病患姓名" required="">
+							<!--<h2>
 								<a href="#"><span class="label label-primary">讀取(Read)</span></a>
-							</h2><br>
+							</h2><br>-->
 
-							醫院名稱* <select id="country13" onchange="change_country(this.value)" class="frm-field required">
+							醫院名稱* </br>
+							<select id="chainID" onchange="change_country(this.value)" class="frm-field required">
 										<option value="null">請選取資料授權的醫院</option>
-										<option value="50">A醫院</option>
-										<option value="51">B醫院</option>
-										<option value="52">C醫院</option>
-										<option value="53">D醫院</option> 
-										<option value="54">其他</option>    
+										<option value="50">台北台大醫院</option>
+										<option value="51">林口長庚醫院</option>
+										<option value="52">台北榮總醫院</option>
+										<option value="53">國泰綜合醫院</option> 
 							</select>
 
 							<input type="submit" value="送出">

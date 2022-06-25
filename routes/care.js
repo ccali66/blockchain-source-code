@@ -119,6 +119,7 @@ router.get('/medcase_read',async function(req, res, next){
 });
 
 router.post('/crosschain',async function(req, res, next){
+    var db = req.con;
     var IDnum = req.body.IDnum;
     var name = req.body.name;
     var chainID = req.body.chainID;
@@ -127,16 +128,16 @@ router.post('/crosschain',async function(req, res, next){
     var sql = {
         PatientName: name,
         cardNum: IDnum,
-        Result: 0,
+        Result: 2,
         dataName: 'record.pdf',
         file: 'NULL',
-        createTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),modifyTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+        createTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
     };
 
     console.log('sql:');
     console.log(sql);
     
-    var qur = db.query('INSERT INTO user SET ?', sql, function(err, rows) {
+    var qur = db.query('INSERT INTO Response SET ?', sql, function(err, rows) {
         if (err){
             console.log('sql error');
             console.log(err);

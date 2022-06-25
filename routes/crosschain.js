@@ -42,7 +42,7 @@ async function launchTx(req, cardNum, hospitalName) {
       var resdata = await response.json();
       console.log(resdata.txContent);
       
-      var resub4 = sub4();
+      var resub4 = await sub4();
       var request = 0; //0 error 1 success
       if(resub4 == '{{"Chain":"ChildA", "message":"Consensus Accepted"},{"Chain":"Relay", "message":"Consensus Accepted"},{"Chain":"ChainB", "message":"Consensus Accepted"}}'){
         console.log('sub4 success');
@@ -50,15 +50,17 @@ async function launchTx(req, cardNum, hospitalName) {
       }else{
           console.log('sub4 error');
       }
+      
       var sql = {
         file: resdata.txContent,
         Result: request,
       };
-      db.query('UPDATE Response SET ?,  WHERE cardNum=?', [sql ,patientName], function(err, rows) {
+      var qur = db.query('UPDATE Response SET ?,  WHERE cardNum=?', [sql ,patientName], function(err, rows) {
           if (err) {
               console.log('DB error');
               console.log(err);
           }
+          console.log(qur);
       });
       
     }else{

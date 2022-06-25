@@ -238,5 +238,4 @@ router.post('/addUser', function(req, res, next) {
     }
 });
 
-
 module.exports = router;

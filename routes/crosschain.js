@@ -11,7 +11,7 @@ window.onload = function () {
 //   connect();
 };
 */
-async function launchTx(req, cardNum, hospitalName) {
+async function launchTx(cardNum, hospitalName) {
   var db = req.con;
 
   console.log("launch tx");
@@ -50,7 +50,7 @@ async function launchTx(req, cardNum, hospitalName) {
       }else{
           console.log('sub4 error');
       }
-      
+
       var sql = {
         file: resdata.txContent,
         Result: request,

@@ -5,8 +5,6 @@ var express = require('express');
 var session = require('express-session');
 const keylib = require("./ether_createkey.js");
 const cross = require("./crosschain.js");
-const fetch = require("node-fetch");
-const Headers = require("node-fetch").Headers;
 var svgcaptcha = require('svg-captcha');
 var getmac = require('getmac');
 var router = express.Router();
@@ -121,20 +119,34 @@ router.get('/medcase_read',async function(req, res, next){
 });
 
 router.post('/crosschain',async function(req, res, next){
-    var CID = req.body.IDnum;
     var IDnum = req.body.IDnum;
-    var sub3res = await cross.launchTx(CID,IDnum);
-    console.log('sub3-crosschainres:'+sub3res);
-
-    var sub4res = await cross.sub4();
-    if(sub4res == '{{"Chain":"ChildA", "message":"Consensus Accepted"},{"Chain":"Relay", "message":"Consensus Accepted"},{"Chain":"ChainB", "message":"Consensus Accepted"}}'){
-        console.log('sub4 success');
-    }else{
-        console.log('sub4 error');
-    }
+    var name = req.body.name;
+    var chainID = req.body.chainID;
+    cross.launchTx(IDnum,chainID);
     //store in DB (sub3res, sub4res)
+    var sql = {
+        PatientName: name,
+        cardNum: IDnum,
+        Result: 0,
+        dataName: 'record.pdf',
+        file: 'NULL',
+        createTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),modifyTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+    };
+
+    console.log('sql:');
+    console.log(sql);
+    
+    var qur = db.query('INSERT INTO user SET ?', sql, function(err, rows) {
+        if (err){
+            console.log('sql error');
+            console.log(err);
+        }
+        console.log(qur);
+    });
     res.redirect('medcase_response');
 });
+
+
 /*router.get('/medcase_response', function(req, res, next){
     res.render('care/medcase_response', {title: 'medcase_response'});
 });
@@ -154,7 +166,7 @@ router.get('/medcase_response',async function(req, res, next){
 });
 
 router.post('/addUser', function(req, res, next) {
-    var db = req.con;	
+    var db = req.con;
     console.log(moment(new Date()).format('YYYY-MM-DD HH:mm:ss'));
     
     var workID = Number(req.body.workID);

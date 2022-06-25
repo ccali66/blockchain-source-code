@@ -11,7 +11,9 @@ window.onload = function () {
 //   connect();
 };
 */
-async function launchTx(patientName, hospitalName) {
+async function launchTx(req, cardNum, hospitalName) {
+  var db = req.con;
+
   console.log("launch tx");
   var data = {
     source: {
@@ -21,7 +23,7 @@ async function launchTx(patientName, hospitalName) {
       chainName: "src",
     },
     txType: "Req",
-    txContent: "/" + patientName + "/record.pdf",
+    txContent: "/" + cardNum + "/record.pdf",
   };
 
   console.log(data);
@@ -39,7 +41,26 @@ async function launchTx(patientName, hospitalName) {
       console.log('request success');
       var resdata = await response.json();
       console.log(resdata.txContent);
-      return resdata.txContent;
+      
+      var resub4 = sub4();
+      var request = 0; //0 error 1 success
+      if(resub4 == '{{"Chain":"ChildA", "message":"Consensus Accepted"},{"Chain":"Relay", "message":"Consensus Accepted"},{"Chain":"ChainB", "message":"Consensus Accepted"}}'){
+        console.log('sub4 success');
+        request = 1;
+      }else{
+          console.log('sub4 error');
+      }
+      var sql = {
+        file: resdata.txContent,
+        Result: request,
+      };
+      db.query('UPDATE Response SET ?,  WHERE cardNum=?', [sql ,patientName], function(err, rows) {
+          if (err) {
+              console.log('DB error');
+              console.log(err);
+          }
+      });
+      
     }else{
       console.log(response);
     }

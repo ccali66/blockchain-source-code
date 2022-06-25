@@ -238,7 +238,7 @@ router.get('/deployprocess',async function(req, res, next){
           console.log(err);
       }
   });
-  res.redirect('/hospital/upload');
+  res.redirect('/hospital/upload_response');
 });
 
 router.get('/upload_response', function(req, res, next){

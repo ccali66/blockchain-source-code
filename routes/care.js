@@ -186,42 +186,55 @@ router.post('/addUser', function(req, res, next) {
     var gender = req.body.gender;
     var years = Number(req.body.years);
     var attr = gender + ',' + years + ',' + title;
-    
+
     if (password != password2){
     	console.log('password is different');
-        res.send('<script>alert("password is different");   window.location.href = "login"; </script>').end();
+        res.send('<script>alert("password is different");   window.location.href = "register"; </script>').end();
     }else{
 	    console.log('password correct');
-        const keypair = keylib.Create_keypair();
-        console.log(keypair.privateKey);
-        console.log(keypair.publicKey);
-        var hashv = workID+name+password+phoneNum+email+title+gender+years+attr+keypair.publicKey;
-        var hashValue = hashsha256(hashv);
-        var sql = {
-            workID: workID,name: name,
-            password: password,phoneNum: phoneNum,
-            email: email,title: stringtitle,gender: gender,
-            years: years,attr: attr,
-            pubKey: keypair.publicKey,
-            hashValue: hashValue,
-            createTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),modifyTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
-        };
-
-        console.log('sql:');
-        console.log(sql);
-        
-        var qur = db.query('INSERT INTO user SET ?', sql, function(err, rows) {
-        if (err){
-	        console.log('sql error');
+        var IDres = 1; //0 error 1 success
+        db.query('SELECT workID FROM user WHERE workID =?',workID,async function(err, rows) {
+            if(err) {
+                console.log('DB error');
                 console.log(err);
-        }
-	        console.log(qur);
-            console.log('私鑰請妥善保存，切勿向他人洩漏'+keypair.privateKey);
-            //res.send(keypair.privateKey)
-            res.redirect('login');
-            //res.send('<script>alert("私鑰請妥善保存，切勿向他人洩漏"keypair.privateKey);   window.location.href = "login"; </script>').end();
+            }
+            var data = rows;
+            console.log(data);
+            if(!data) IDres == 0;
         });
-
+        if(IDres == 0){
+            console.log('acount error');
+            res.send('<script>alert("此工作證號已註冊，請登入或重新確認您的工作證號");   window.location.href = "register"; </script>').end();
+        }else{
+            const keypair = keylib.Create_keypair();
+            console.log(keypair.privateKey);
+            console.log(keypair.publicKey);
+            var hashv = workID+name+password+phoneNum+email+title+gender+years+attr+keypair.publicKey;
+            var hashValue = hashsha256(hashv);
+            var sql = {
+                workID: workID,name: name,
+                password: password,phoneNum: phoneNum,
+                email: email,title: stringtitle,gender: gender,
+                years: years,attr: attr,
+                pubKey: keypair.publicKey,
+                hashValue: hashValue,
+                createTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),modifyTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+            };
+            console.log('sql:');
+            console.log(sql);
+            
+            var qur = db.query('INSERT INTO user SET ?', sql, function(err, rows) {
+            if (err){
+                console.log('sql error');
+                    console.log(err);
+            }
+                console.log(qur);
+                console.log('私鑰請妥善保存，切勿向他人洩漏'+keypair.privateKey);
+                //res.send(keypair.privateKey)
+                res.send('<script>alert("註冊成功");   window.location.href = "login"; </script>').end();
+                //res.send('<script>alert("私鑰請妥善保存，切勿向他人洩漏"keypair.privateKey);   window.location.href = "login"; </script>').end();
+            });
+        }
     }
 });
 

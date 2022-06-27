@@ -23,7 +23,7 @@ async function launchTx(cardNum, hospitalName) {
       chainName: "src",
     },
     txType: "Req",
-    txContent: "/uploads/" + cardNum + ".pdf",
+    txContent: "chainweb/uploads/" + cardNum + ".pdf",
   };
 
   console.log(data);

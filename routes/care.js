@@ -137,7 +137,7 @@ router.post('/crosschain',async function(req, res, next){
             PatientName: name,
             cardNum: IDnum,
             Result: 2,
-            dataName: 'record.pdf',
+            dataName: IDnum + '.pdf',
             file: 'wait',
             createTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
         };

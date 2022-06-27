@@ -132,7 +132,7 @@ router.post('/crosschain',async function(req, res, next){
         }
         no = rows;
         console.log('select MAX NO:');
-        console.log(data);
+        console.log(no);
     });
 
     var sql = {

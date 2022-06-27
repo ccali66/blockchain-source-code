@@ -130,14 +130,14 @@ router.post('/crosschain',async function(req, res, next){
         if (err) {
 	    console.log('DB error');
         console.log(err);
-        return no;
+        return data;
         }
         
         console.log(rows);
-        no = Number(JSON.parse(JSON.stringify(rows))[0].maxid)+1;
+        data = Number(JSON.parse(JSON.stringify(rows))[0].maxid)+1;
         console.log('select MAX NO:');
-        console.log(no);
-        return no;
+        console.log(data);
+        return data;
     });
     console.log('test no');
     console.log(no);

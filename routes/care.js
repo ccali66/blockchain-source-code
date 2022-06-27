@@ -123,14 +123,16 @@ router.post('/crosschain',async function(req, res, next){
     var IDnum = req.body.IDnum;
     var name = req.body.name;
     var chainID = req.body.chainID;
-    cross.launchTx(IDnum,chainID);
+    res.send('<script>alert("正在進行跨鏈請求，請等待數分鐘"); </script>');
+    var resub3 = await cross.launchTx(IDnum,chainID);
+    var resub4 = await cross.sub4();
     //store in DB (sub3res, sub4res)
     var sql = {
         PatientName: name,
         cardNum: IDnum,
-        Result: 2,
+        Result: resub4,
         dataName: 'record.pdf',
-        file: 'NULL',
+        file: resub3,
         createTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
     };
 

@@ -12,7 +12,7 @@ window.onload = function () {
 };
 */
 async function launchTx(cardNum, hospitalName) {
-  var db = req.con;
+  //var db = req.con;
 
   console.log("launch tx");
   var data = {
@@ -41,20 +41,15 @@ async function launchTx(cardNum, hospitalName) {
       console.log('request success');
       var resdata = await response.json();
       console.log(resdata.txContent);
-      
-      var resub4 = await sub4();
-      var request = 0; //0 error 1 success
-      if(resub4 == '{{"Chain":"ChildA", "message":"Consensus Accepted"},{"Chain":"Relay", "message":"Consensus Accepted"},{"Chain":"ChainB", "message":"Consensus Accepted"}}'){
-        console.log('sub4 success');
-        request = 1;
-      }else{
-          console.log('sub4 error');
-      }
+      return resdata.txContent;
+      //var resub4 = await sub4();
 
+/*
       var sql = {
         file: resdata.txContent,
         Result: request,
       };
+      
       var qur = db.query('UPDATE Response SET ?,  WHERE cardNum=?', [sql ,patientName], function(err, rows) {
           if (err) {
               console.log('DB error');
@@ -62,18 +57,21 @@ async function launchTx(cardNum, hospitalName) {
           }
           console.log(qur);
       });
-      
+*/
     }else{
       console.log(response);
+      return "Status Error";
     }
   }catch (error){
     console.log('request error');
     console.log(error);
+    return "Request Error";
   }
   
 }
 
 async function sub4(){
+  var request = 0; //0 error 1 success
   try{
     const response = await fetch("http://140.118.9.226:58005/consensus/rest/CrossConsensus", {
       method: "Get",
@@ -85,13 +83,22 @@ async function sub4(){
       console.log('request success');
       var resdata = await response.text();
       console.log(resdata);
-      return resdata;
+      if(resdata == '{{"Chain":"ChildA", "message":"Consensus Accepted"},{"Chain":"Relay", "message":"Consensus Accepted"},{"Chain":"ChainB", "message":"Consensus Accepted"}}'){
+        console.log('sub4 success');
+        request = 1;
+        return request;
+      }else{
+        console.log('sub4 error');
+        return request;
+      }
     }else{
       console.log(response);
+      return request;
     }
   }catch(error){
     console.log('request error');
     console.log(error);
+    return request;
   }
 }
 

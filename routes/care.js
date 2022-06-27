@@ -153,7 +153,7 @@ router.post('/crosschain',async function(req, res, next){
         file: resub3,
         Result: resub4,
       };
-    var qur = db.query('UPDATE Response SET ?,  WHERE cardNum=?', [sql ,patientName], function(err, rows) {
+    var qur = db.query('UPDATE Response SET ?,  WHERE cardNum=?', [sql ,IDnum], function(err, rows) {
         if (err) {
             console.log('DB error');
             console.log(err);

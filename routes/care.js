@@ -123,8 +123,20 @@ router.post('/crosschain',async function(req, res, next){
     var IDnum = req.body.IDnum;
     var name = req.body.name;
     var chainID = req.body.chainID;
+    var no = 0;
     //store in DB response
+    db.query('SELECT MAX(NO) FROM Response',async function(err, rows) {
+        if (err) {
+	    console.log('DB error');
+        console.log(err);
+        }
+        no = rows;
+        console.log('select MAX NO:');
+        console.log(data);
+    });
+
     var sql = {
+        NO:no,
         PatientName: name,
         cardNum: IDnum,
         Result: 2,
@@ -143,7 +155,7 @@ router.post('/crosschain',async function(req, res, next){
         }
         console.log(qur);
     });
-    res.send('<script>alert("正在進行跨鏈請求，請等待數分鐘");   window.location.href = "medcase_response"; </script>');
+    res.send('<script>alert("正在進行跨鏈請求，請等待數分鐘");  window.location.href = "medcase_response"; </script>');
 
     //call sub3,4 API
     var resub3 = await cross.launchTx(IDnum,chainID);
@@ -153,7 +165,7 @@ router.post('/crosschain',async function(req, res, next){
         file: resub3,
         Result: resub4,
       };
-    var qur = db.query('UPDATE Response SET ? WHERE cardNum=?', [sql ,IDnum], function(err, rows) {
+    var qur = db.query('UPDATE Response SET ? WHERE NO=?', [sql ,no], function(err, rows) {
         if (err) {
             console.log('DB error');
             console.log(err);

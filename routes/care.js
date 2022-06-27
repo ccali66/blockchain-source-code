@@ -126,10 +126,10 @@ router.post('/crosschain',async function(req, res, next){
     //var no = 0;
     //store in DB response
     var no = await db.query('SELECT MAX(NO) as maxid FROM Response',async function(err, rows) {
+        var data = 0;
         if (err) {
 	    console.log('DB error');
         console.log(err);
-        no = 0;
         return no;
         }
         
@@ -139,7 +139,8 @@ router.post('/crosschain',async function(req, res, next){
         console.log(no);
         return no;
     });
-
+    console.log('test no');
+    console.log(no);
     var sql = {
         NO:no,
         PatientName: name,

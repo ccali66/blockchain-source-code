@@ -125,7 +125,7 @@ router.post('/crosschain',async function(req, res, next){
     var chainID = req.body.chainID;
     let no = 0;
     //store in DB response
-    await db.query('SELECT MAX(NO) as maxid FROM Response',async function(err, rows) {
+    var qur = await db.query('SELECT MAX(NO) as maxid FROM Response',async function(err, rows) {
         //var data = 0;
         if (err) {
 	    console.log('DB error');

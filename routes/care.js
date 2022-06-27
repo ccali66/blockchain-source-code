@@ -125,20 +125,20 @@ router.post('/crosschain',async function(req, res, next){
     var chainID = req.body.chainID;
     var no = 0;
     //store in DB response
-    await db.query('SELECT MAX(NO) FROM Response',async function(err, rows) {
+    await db.query('SELECT MAX(NO) as maxid FROM Response',async function(err, rows) {
         if (err) {
 	    console.log('DB error');
         console.log(err);
         }
         
         console.log(rows);
-        var data = rows[1];
+        no = Number(JSON.parse(JSON.stringify(rows))[0].maxid)+1;
         console.log('select MAX NO:');
-        console.log(data);
+        console.log(no);
     });
-/*
+
     var sql = {
-        NO:no+1,
+        NO:no,
         PatientName: name,
         cardNum: IDnum,
         Result: 2,
@@ -175,7 +175,7 @@ router.post('/crosschain',async function(req, res, next){
         console.log(qur);
       });
     //res.redirect('medcase_response');
-    */
+    
 });
 
 

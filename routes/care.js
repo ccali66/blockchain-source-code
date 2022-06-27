@@ -6,12 +6,7 @@ var session = require('express-session');
 const keylib = require("./ether_createkey.js");
 const cross = require("./crosschain.js");
 var svgcaptcha = require('svg-captcha');
-var getmac = require('getmac');
 var router = express.Router();
-
-function callMac(){
-    return getmac.default();
-}
 
 router.use(session({
     secret: 'secret',

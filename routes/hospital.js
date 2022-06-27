@@ -219,7 +219,7 @@ router.get('/deployprocess',async function(req, res, next){
   filehashvalue=hash.filehash(target_path);
   console.log('hashvalue:'+filehashvalue);
   /** Encrype data by AES */
-  aes.enc(target_path);
+  //aes.enc(target_path);
   /** Deploy code in chain*/
   var addr = await callchain(filename, filehashvalue, target_path);
   console.log('chainaddr:'+addr);

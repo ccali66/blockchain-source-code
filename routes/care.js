@@ -123,16 +123,13 @@ router.post('/crosschain',async function(req, res, next){
     var IDnum = req.body.IDnum;
     var name = req.body.name;
     var chainID = req.body.chainID;
-    res.send('<script>alert("正在進行跨鏈請求，請等待數分鐘");   window.location.href = "medcase_response"; </script>');
-    var resub3 = await cross.launchTx(IDnum,chainID);
-    var resub4 = await cross.sub4();
-    //store in DB (sub3res, sub4res)
+    //store in DB response
     var sql = {
         PatientName: name,
         cardNum: IDnum,
-        Result: resub4,
+        Result: 2,
         dataName: 'record.pdf',
-        file: resub3,
+        file: 'wait',
         createTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
     };
 
@@ -146,6 +143,23 @@ router.post('/crosschain',async function(req, res, next){
         }
         console.log(qur);
     });
+    res.send('<script>alert("正在進行跨鏈請求，請等待數分鐘");   window.location.href = "medcase_response"; </script>');
+
+    //call sub3,4 API
+    var resub3 = await cross.launchTx(IDnum,chainID);
+    var resub4 = await cross.sub4();
+    //store in DB (sub3res, sub4res)
+    var sql = {
+        file: resub3,
+        Result: resub4,
+      };
+    var qur = db.query('UPDATE Response SET ?,  WHERE cardNum=?', [sql ,patientName], function(err, rows) {
+        if (err) {
+            console.log('DB error');
+            console.log(err);
+        }
+        console.log(qur);
+      });
     //res.redirect('medcase_response');
 });
 

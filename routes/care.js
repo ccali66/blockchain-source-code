@@ -137,7 +137,7 @@ router.post('/crosschain',async function(req, res, next){
         console.log('select MAX NO:');
         console.log(no);
     });*/
-    var rows = await db.query('SELECT MAX(NO) as maxid FROM Response');
+    const rows = await db.query('SELECT MAX(NO) as maxid FROM Response');
     console.log(rows);
     no = Number(JSON.parse(JSON.stringify(rows))[0].maxid)+1;
     console.log('test no:');

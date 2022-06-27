@@ -123,23 +123,21 @@ router.post('/crosschain',async function(req, res, next){
     var IDnum = req.body.IDnum;
     var name = req.body.name;
     var chainID = req.body.chainID;
-    //var no = 0;
+    let no = 0;
     //store in DB response
-    var no = await db.query('SELECT MAX(NO) as maxid FROM Response',async function(err, rows) {
-        var data = 0;
+    await db.query('SELECT MAX(NO) as maxid FROM Response',async function(err, rows) {
+        //var data = 0;
         if (err) {
 	    console.log('DB error');
         console.log(err);
-        return data;
         }
         
         console.log(rows);
-        data = Number(JSON.parse(JSON.stringify(rows))[0].maxid)+1;
+        no = Number(JSON.parse(JSON.stringify(rows))[0].maxid)+1;
         console.log('select MAX NO:');
-        console.log(data);
-        return data;
+        console.log(no);
     });
-    console.log('test no');
+    console.log('test no:');
     console.log(no);
     var sql = {
         NO:no,

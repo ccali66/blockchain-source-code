@@ -125,7 +125,7 @@ router.post('/crosschain',async function(req, res, next){
     var chainID = req.body.chainID;
     let no = 0;
     //store in DB response
-    var qur = await db.query('SELECT MAX(NO) as maxid FROM Response',async function(err, rows) {
+    /*var qur = await db.query('SELECT MAX(NO) as maxid FROM Response',async function(err, rows) {
         //var data = 0;
         if (err) {
 	    console.log('DB error');
@@ -136,7 +136,10 @@ router.post('/crosschain',async function(req, res, next){
         no = Number(JSON.parse(JSON.stringify(rows))[0].maxid)+1;
         console.log('select MAX NO:');
         console.log(no);
-    });
+    });*/
+    var rows = await db.query('SELECT MAX(NO) as maxid FROM Response');
+    console.log(rows);
+    no = Number(JSON.parse(JSON.stringify(rows))[0].maxid)+1;
     console.log('test no:');
     console.log(await no);
     var sql = {

@@ -208,7 +208,7 @@ router.post('/uploadfile', upload.single('myFile') ,function(req, res, next){
     console.log('title:'+stringattr);
     req.session.attr = stringattr;
     
-    //res.redirect('/hospital/deployprocess');
+    res.redirect('/hospital/deployprocess');
 });
 
 router.get('/deployprocess',async function(req, res, next){

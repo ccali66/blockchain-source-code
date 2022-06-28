@@ -206,6 +206,12 @@ router.post('/uploadfile', upload.single('myFile') ,function(req, res, next){
     var stringattr = JSON.stringify(attr);
     console.log('titletypeof:'+typeof(stringattr));
     console.log('title:'+stringattr);
+    req.session.test = {
+        cardnum : cardnum,
+        name :name,
+        CID : CID,
+        attr : stringattr
+    };
     req.session.attr = stringattr;
     
     res.redirect('/hospital/deployprocess');
@@ -225,6 +231,9 @@ router.get('/deployprocess',async function(req, res, next){
   var addr = await callchain(filename, filehashvalue, target_path);
   console.log('chainaddr:'+addr);
   /** Insert file to DB*/
+  console.log('-------test---------');
+  console.log(req.session.test);
+  console.log(req.session.test.name);
   var sql = {
       dataName: filename,
       attr: attr,

@@ -104,7 +104,7 @@ router.post('/addUser', function(req, res, next) {
     //var title = "'"+restitle.replace("'",'')+"'";
     //console.log('title:'+title);
     var gender = req.body.gender;
-    var years = Number(req.body.years);
+    var years = req.body.years;
     var attr = gender + ',' + years + ',' + title;
     
     

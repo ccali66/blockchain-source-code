@@ -127,7 +127,68 @@
 							<div class="col-sm-9">
 								<div class="location_box1">
 									<h6><%= i+1 %>. 病歷名稱 : <%= data[i].dataName %> </h6>
-									<p><span class="m_2">授權屬性 : <%= data[i].attr %>  </span></p>
+									<p><span class="m_2">病患姓名 : <%= data[i].PatientName %>  </span></p>
+									<p><span class="m_2">授權屬性 : 
+										<% 
+											var attr = data[i].attr.slice(2,-2).split('","')
+											for(var j = 0;j < attr.length;j++){
+												switch(attr[j]) {
+													case "10":
+														%> 工作經驗:0-1年 <% 
+														break; 
+													case "11": 
+														%> 工作經驗:2-4年 <% 
+														break; 
+													case "12": 
+														%> 工作經驗:5-7年 <% 
+														break; 
+													case "13": 
+														%> 工作經驗:8-10年 <% 
+														break;
+													case "14": 
+														%> 工作經驗:10年以上 <% 
+														break;
+													case "20": 
+														%> 照顧服務人員 <% 
+														break;
+													case "21": 
+														%> 物理治療師 <% 
+														break;
+													case "22": 
+														%> 職能治療師 <% 
+														break;
+													case "24": 
+														%> 營養師 <% 
+														break;
+													case "30": 
+														%> 醫師 <% 
+														break;
+													case "31": 
+														%> 護士 <% 
+														break;
+													case "40": 
+														%> 內科 <% 
+														break;
+													case "41": 
+														%> 外科 <% 
+														break;
+													case "42": 
+														%> 眼科 <% 
+														break;
+													case "43": 
+														%> 骨科 <% 
+														break;
+													case "44": 
+														%> 復健科 <% 
+														break;
+													default: 
+														%>  <% 
+														break;
+												}
+												if(j != attr.length-1){ %>, <%}
+											} 
+										%>  
+									</span></p>
 									<p><span class="m_2">病歷雜湊值 : <%= data[i].hashvalue %>  </span></p>
 									<p><span class="m_2">合約地址 : <%= data[i].contractaddr %>  </span></p>
 									<p><span class="m_2"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span class="glyphicon-class">上傳時間 : <%= moment(data[i].createtime).format('YYYY-MM-DD HH:MM'); %></span></p>

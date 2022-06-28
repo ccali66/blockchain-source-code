@@ -192,36 +192,32 @@ router.post('/uploadfile', upload.single('myFile') ,function(req, res, next){
     src.pipe(dest);
     src.on('end', function() { return res.render('complete'); });
     src.on('error', function(err) { return res.render('error'); });
-    req.session.filename = req.file.originalname;
+    //req.session.filename = req.file.originalname;
     console.log('file:'+req.session.filename);
 
     /** Get attr */
     var cardnum = req.body.NID;
     var name = req.body.cname;
     var CID = req.body.CID;
-    console.log('cardnum:'+cardnum);
-    console.log('name:'+name);
-    console.log('CID:'+CID);
     var attr = req.body.attr;
     var stringattr = JSON.stringify(attr);
     console.log('titletypeof:'+typeof(stringattr));
     console.log('title:'+stringattr);
-    req.session.test = {
+    req.session.filev = {
         cardnum : cardnum,
         name :name,
         CID : CID,
-        attr : stringattr
+        attr : stringattr,
+        filename : req.file.originalname
     };
-    req.session.attr = stringattr;
     
     res.redirect('/hospital/deployprocess');
 });
 
 router.get('/deployprocess',async function(req, res, next){
   var db = req.con;
-  var filename = req.session.filename;
+  var filename = req.session.filev.filename;
   var target_path = '/usr/share/nginx/html/uploads/'+filename;
-  var attr =req.session.attr;
   /** Hash Value*/
   filehashvalue=hash.filehash(target_path);
   console.log('hashvalue:'+filehashvalue);
@@ -231,12 +227,12 @@ router.get('/deployprocess',async function(req, res, next){
   var addr = await callchain(filename, filehashvalue, target_path);
   console.log('chainaddr:'+addr);
   /** Insert file to DB*/
-  console.log('-------test---------');
-  console.log(req.session.test);
-  console.log(req.session.test.name);
   var sql = {
+      CID:req.session.filev.CID,
+      cardNum:req.session.filev.cardnum,
+      PatientName: req.session.filev.name,
       dataName: filename,
-      attr: attr,
+      attr: req.session.filev.attr,
       datapath: target_path,
       createTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       hashValue: filehashvalue,

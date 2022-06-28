@@ -183,7 +183,7 @@ router.post('/uploadfile', upload.single('myFile') ,function(req, res, next){
     var tmp_path = req.file.path;
 
     /** The original name of the uploaded file stored in the variable "originalname". **/
-    var target_path = '/usr/share/nginx/html/uploads' + req.file.originalname;
+    var target_path = '/usr/share/nginx/html/uploads/' + req.file.originalname;
 
     /** A better way to copy the uploaded file. **/
     var src = fs.createReadStream(tmp_path);
@@ -213,7 +213,7 @@ router.post('/uploadfile', upload.single('myFile') ,function(req, res, next){
 router.get('/deployprocess',async function(req, res, next){
   var db = req.con;
   var filename = req.session.filename;
-  var target_path = 'uploads/'+filename;
+  var target_path = '/usr/share/nginx/html/uploads/'+filename;
   var attr =req.session.attr;
   /** Hash Value*/
   filehashvalue=hash.filehash(target_path);

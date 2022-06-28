@@ -181,6 +181,7 @@ async function callchain(name, value, position){
 router.post('/uploadfile', upload.single('myFile') ,function(req, res, next){
     /** When using the "single" data come in "req.file" regardless of the attribute "name". **/
     var tmp_path = req.file.path;
+    console.log(req.file.originalname);
 
     /** The original name of the uploaded file stored in the variable "originalname". **/
     var target_path = '/usr/share/nginx/html/uploads/' + req.file.originalname;

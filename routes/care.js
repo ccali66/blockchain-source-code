@@ -156,6 +156,7 @@ router.post('/crosschain',async function(req, res, next){
     
         //call sub3,4 API
         var resub3 = await cross.launchTx(IDnum,chainID);
+        //aes.dec(target_path);
         var resub4 = await cross.sub4();
         //store in DB (sub3res, sub4res)
         var sql = {

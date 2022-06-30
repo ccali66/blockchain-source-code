@@ -90,7 +90,7 @@
 
 			<ul class="short_w3ls"_w3ls>
 				<li><a href="/">首頁</a><span>|</span></li>
-				<li>資料上傳頁面</li>
+				<li>病歷上傳頁面</li>
 			</ul>
 		</div>
 	</div>
@@ -109,7 +109,8 @@
 	</div>
 	<div class="inner_content_info_agileits">
 		<div class="tittle_head_w3ls">
-			<h3 class="tittle three">資料上傳頁面</h3>
+			<h3 class="tittle three">醫護人員病歷上傳與加密頁面</h3>
+			[本病歷使用AES256加密]
 		</div>
 		<div class="inner_sec_grids_info login-form">
 			<form action="uploadfile" method="post" enctype="multipart/form-data">
@@ -121,11 +122,11 @@
 								病患身分證* <input type="text" name="CID" placeholder="請輸入病患身分證號碼" required="">
 									<div class="form-inputs upload">
 										上傳病歷*<br>
-										(建議上傳pdf、ppt、word格式)
+										(請上傳pdf格式)
 										<input type="file" name="myFile" id="fileselect" size="20" class="ifile">
-										<input type="button" value="選擇上傳檔案">
+										<input type="button" value="選擇上傳病歷">
 										<div class="fileName">
-											未選擇檔案
+											未選擇病歷
 										</div>
 									</div>
 						</div>
@@ -134,7 +135,7 @@
 
 				<div class="col-md-6 form-right">					
 					<div class="form-inputs name">
-					<h4><b>授權屬性</b></h4><br>
+					<h4><b>請勾選病歷可被存取之屬性*</b></h4><br>
 
 					<table class="table">
 							<tbody>

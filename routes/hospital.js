@@ -164,11 +164,15 @@ router.post('/addUser', function(req, res, next) {
 
 
 router.get('/upload',async function(req, res, next){
-    if (!req.session.user && req.session.user.where != 'hospital') {
+    if (!req.session.user) {
         res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
     }else{
-        var risk = await cross.chainrisk(225);
-        res.render('hospital/upload', {riskv:risk});
+        if(req.session.user.where != 'hospital'){
+            res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
+        }else{
+            var risk = await cross.chainrisk(225);
+            res.render('hospital/upload', {riskv:risk});
+        }
     }
 });
 
@@ -256,20 +260,24 @@ router.get('/deployprocess',async function(req, res, next){
 });
 
 router.get('/upload_response', function(req, res, next){
-    if (!req.session.user && req.session.user.where != 'hospital') {
+    if (!req.session.user) {
         res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
     }else{
-        var db = req.con;
-        db.query('SELECT * FROM uploadData',async function(err, rows) {
-            if (err) {
-            console.log('DB error');
-            console.log(err);
-            }
-            var data = rows;
-            console.log(data);
-            var risk = await cross.chainrisk(225);
-            res.render('hospital/upload_response', { title: 'upload_response', data: data, moment: moment,riskv:risk});
-        });  
+        if(req.session.user.where != 'hospital'){
+            res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
+        }else{
+            var db = req.con;
+            db.query('SELECT * FROM uploadData',async function(err, rows) {
+                if (err) {
+                console.log('DB error');
+                console.log(err);
+                }
+                var data = rows;
+                console.log(data);
+                var risk = await cross.chainrisk(225);
+                res.render('hospital/upload_response', { title: 'upload_response', data: data, moment: moment,riskv:risk});
+            });
+        }  
     }   
 });
 

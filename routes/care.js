@@ -87,7 +87,8 @@ router.post('/logining',function(req, res, next){
                     if(dbpw == pw){
                         req.session.user = {
                             UID : rows[0].workID,
-                            attr : rows[0].attr
+                            attr : rows[0].attr,
+                            where : 'care'
                         };
                         res.setHeader('Content-Type', 'application/json');
                         res.redirect('medcase');
@@ -108,7 +109,7 @@ router.get('/register', function(req, res, next){
 });
 
 router.get('/medcase',async function(req, res, next){
-    if (!req.session.user) {
+    if (!req.session.user && req.session.user.where != 'care') {
         res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
     }else{
         var risk = await cross.chainrisk(227);
@@ -193,7 +194,7 @@ router.post('/crosschain',async function(req, res, next){
 */
 router.get('/medcase_response',async function(req, res, next){
     var db = req.con;
-    if (!req.session.user) {
+    if (!req.session.user && req.session.user.where != 'care') {
         res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
     }else{
         var UID = req.session.user.UID;

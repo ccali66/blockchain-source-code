@@ -69,8 +69,13 @@ router.post('/logining',function(req, res, next){
                 }else{
                     dbpw = rows[0].password;
                     if(dbpw == pw){
-                            res.setHeader('Content-Type', 'application/json');
-                            res.redirect('upload');
+                        req.session.user = {
+                            UID : rows[0].workID,
+                            attr : rows[0].attr,
+                            where : 'hospital'
+                        };
+                        res.setHeader('Content-Type', 'application/json');
+                        res.redirect('upload');
                     }else{
                         console.log('wrong password');
                         res.send('<script>alert("密碼輸入錯誤，麻煩請重新登入");   window.location.href = "login"; </script>').end();
@@ -106,7 +111,6 @@ router.post('/addUser', function(req, res, next) {
     var gender = req.body.gender;
     var years = req.body.years;
     var attr = gender + ',' + years + ',' + title;
-    
     
     if (password != password2){
     	console.log('password is different');
@@ -160,7 +164,7 @@ router.post('/addUser', function(req, res, next) {
 
 
 router.get('/upload',async function(req, res, next){
-    if (!req.session.user) {
+    if (!req.session.user && req.session.user.where != 'hospital') {
         res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
     }else{
         var risk = await cross.chainrisk(225);
@@ -252,7 +256,7 @@ router.get('/deployprocess',async function(req, res, next){
 });
 
 router.get('/upload_response', function(req, res, next){
-    if (!req.session.user) {
+    if (!req.session.user && req.session.user.where != 'hospital') {
         res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
     }else{
         var db = req.con;

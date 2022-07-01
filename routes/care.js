@@ -73,7 +73,7 @@ router.post('/logining',function(req, res, next){
         console.log('captcha error');
         res.send('<script>alert("驗證碼輸入錯誤，麻煩請重新登入");   window.location.href = "login"; </script>').end();
     }else{
-        var qur = db.query('Select workID, password, name from user where workID = ?', workID, function(err, rows) {
+        var qur = db.query('Select workID, password, name, attr from user where workID = ?', workID, function(err, rows) {
             if (err){
                 console.log('sql error');
                 console.log(err);
@@ -85,8 +85,12 @@ router.post('/logining',function(req, res, next){
                 }else{
                     dbpw = rows[0].password;
                     if(dbpw == pw){
-                            res.setHeader('Content-Type', 'application/json');
-                            res.redirect('medcase');
+                        req.session.user = {
+                            UID : rows[0].workID,
+                            attr : rows[0].attr
+                        };
+                        res.setHeader('Content-Type', 'application/json');
+                        res.redirect('medcase');
                     }else{
                         console.log('wrong password');
                         res.send('<script>alert("密碼輸入錯誤，麻煩請重新登入");   window.location.href = "login"; </script>').end();
@@ -184,16 +188,29 @@ router.post('/crosschain',async function(req, res, next){
 */
 router.get('/medcase_response',async function(req, res, next){
     var db = req.con;
-    db.query('SELECT * FROM Response',async function(err, rows) {
-        if (err) {
-	    console.log('DB error');
-        console.log(err);
-        }
-        var data = rows;
-        console.log(data);
-        var risk = await cross.chainrisk(227);
-        res.render('care/medcase_response', { title: 'medcase_response', data: data, moment: moment, riskv: risk});
-    });
+    if (!req.session.user) {
+        res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
+    }else{
+        var UID = req.session.user.UID;
+        var attr = req.session.user.attr;
+        console.log('UID:'+UID);
+        db.query('SELECT * FROM Response WHERE workID =?',UID ,async function(err, rows) {
+            if (err) {
+            console.log('DB error');
+            console.log(err);
+            res.send('<script>alert("DB Error 請通知系統管理人員");   window.location.href = "login"; </script>').end();
+            }else{
+                var data = rows;
+                console.log(data);
+                var risk = await cross.chainrisk(227);
+                var userv = {
+                    workID:UID,
+                    attr:attr
+                };
+                res.render('care/medcase_response', { title: 'medcase_response', data: data, user:userv, moment: moment, riskv: risk});
+            }
+        });
+    }
 });
 
 router.post('/addUser', function(req, res, next) {

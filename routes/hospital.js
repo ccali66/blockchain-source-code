@@ -160,8 +160,12 @@ router.post('/addUser', function(req, res, next) {
 
 
 router.get('/upload',async function(req, res, next){
-    var risk = await cross.chainrisk(225);
-    res.render('hospital/upload', {riskv:risk});
+    if (!req.session.user) {
+        res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
+    }else{
+        var risk = await cross.chainrisk(225);
+        res.render('hospital/upload', {riskv:risk});
+    }
 });
 
 async function callchain(name, value, position){
@@ -193,7 +197,7 @@ router.post('/uploadfile', upload.single('myFile') ,function(req, res, next){
     src.on('end', function() { return res.render('complete'); });
     src.on('error', function(err) { return res.render('error'); });
     //req.session.filename = req.file.originalname;
-    console.log('file:'+req.session.filename);
+    //console.log('file:'+req.session.filename);
 
     /** Get attr */
     var cardnum = req.body.NID;
@@ -248,17 +252,21 @@ router.get('/deployprocess',async function(req, res, next){
 });
 
 router.get('/upload_response', function(req, res, next){
-    var db = req.con;
-    db.query('SELECT * FROM uploadData',async function(err, rows) {
-        if (err) {
-	    console.log('DB error');
-        console.log(err);
-        }
-        var data = rows;
-        console.log(data);
-        var risk = await cross.chainrisk(225);
-        res.render('hospital/upload_response', { title: 'upload_response', data: data, moment: moment,riskv:risk});
-    });
+    if (!req.session.user) {
+        res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
+    }else{
+        var db = req.con;
+        db.query('SELECT * FROM uploadData',async function(err, rows) {
+            if (err) {
+            console.log('DB error');
+            console.log(err);
+            }
+            var data = rows;
+            console.log(data);
+            var risk = await cross.chainrisk(225);
+            res.render('hospital/upload_response', { title: 'upload_response', data: data, moment: moment,riskv:risk});
+        });  
+    }   
 });
 
 module.exports = router;

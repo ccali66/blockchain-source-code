@@ -108,8 +108,12 @@ router.get('/register', function(req, res, next){
 });
 
 router.get('/medcase',async function(req, res, next){
-    var risk = await cross.chainrisk(227);
-    res.render('care/medcase', {title: 'medcase', riskv: risk});
+    if (!req.session.user) {
+        res.send('<script>alert("麻煩請先登入");   window.location.href = "login"; </script>').end();
+    }else{
+        var risk = await cross.chainrisk(227);
+        res.render('care/medcase', {title: 'medcase', riskv: risk});
+    }
 });
 
 router.get('/medcase_read',async function(req, res, next){
@@ -138,6 +142,7 @@ router.post('/crosschain',async function(req, res, next){
 
         var sql = {
             NO:no,
+            workID:req.session.user.UID,
             PatientName: name,
             cardNum: IDnum,
             Result: 2,
@@ -193,7 +198,6 @@ router.get('/medcase_response',async function(req, res, next){
     }else{
         var UID = req.session.user.UID;
         var attr = req.session.user.attr;
-        console.log('UID:'+UID);
         db.query('SELECT * FROM Response WHERE workID =?',UID ,async function(err, rows) {
             if (err) {
             console.log('DB error');
